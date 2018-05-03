@@ -2,7 +2,10 @@ package com.hbjpro.testkotlin
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,36 +20,29 @@ class MainActivity : AppCompatActivity() {
         var adapter = BookListAdapter(addBookData(), this)
         var list = findViewById(R.id.list_books) as ListView
         list.adapter = adapter
+        
+        list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            Log.i("click", position.toString())
+            var item = parent.getItemAtPosition(position)
+            Toast.makeText(applicationContext, item.toString(), Toast.LENGTH_SHORT)
+        }
     }
 
-    private fun addBookData() : ArrayList<Book>{
-        var bookList = ArrayList<Book>()
+    private fun addBookData() : MutableList<Book>{
+        var bookList: MutableList<Book> = mutableListOf()
 
-        var book1 = Book()
-        book1.name = "Dragon Ball"
-        book1.author = "Akira Toriyama"
-        bookList.add(book1)
+        bookList.add(Book("Dragon Ball", "Akira Toriyama"))
 
-        var book2 = Book()
-        book2.name = "Harry Potter"
-        book2.author = "JK Rowling"
-        bookList.add(book2)
+        bookList.add(Book("Harry Potter", "JK Rowling"))
 
-        var book3 = Book()
-        book3.name = "The Lord of the Rings"
-        book3.author = "JRR Tolkien"
-        bookList.add(book3)
+        bookList.add(Book("The Lord of the Rings", "JRR Tolkien"))
 
-        var book4 = Book()
-        book4.name = "Spider-man"
-        book4.author = "Stan Lee"
-        bookList.add(book4)
+        bookList.add(Book("Spider-man", "Stan Lee"))
 
-        var book5 = Book()
-        book5.name = "The Hobbit"
-        book5.author = "JRR Tolkien"
-        bookList.add(book5)
+        bookList.add(Book("The Hobbit", "JRR Tolkien"))
 
         return bookList
     }
+
+
 }

@@ -10,8 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 
 
-data class BookListAdapter (var list:ArrayList<Book>, var context: Context) : BaseAdapter(){
-    var bookList : ArrayList<Book>? = null
+data class BookListAdapter (var list:MutableList<Book>, var context: Context) : BaseAdapter(){
+    var bookList : MutableList<Book>? = null
     var infalter : LayoutInflater? = null
 
     init {
@@ -25,7 +25,7 @@ data class BookListAdapter (var list:ArrayList<Book>, var context: Context) : Ba
         view = infalter?.inflate(R.layout.layout_book_item, parent, false)
 
         var viewHolder = ViewHolder(view)
-        viewHolder.setText(position + 1, bookList?.get(position)?.name, bookList?.get(position)?.author)
+        viewHolder.setText(position + 1, bookList?.get(position)?.title, bookList?.get(position)?.author)
 
         return view!!
     }
@@ -52,10 +52,12 @@ private class ViewHolder(var view: View?){
     }
 
     fun setText(number: Int, book: String?, author: String?){
+        //var numberText = root?.findViewById(R.id.txt_number) as TextView
         var image = root?.findViewById(R.id.imageView) as ImageView
         var bookNameText = root?.findViewById(R.id.txt_bookName) as TextView
         var authorText = root?.findViewById(R.id.txt_bookAuthor) as TextView
 
+        //numberText.text = number.toString()
         if(number % 2 == 0)
             image.setBackgroundColor(Color.parseColor("#0000FF"))
         else
